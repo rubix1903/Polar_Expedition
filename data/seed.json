@@ -1,0 +1,89 @@
+{
+ "users": [
+  {"username": "director", "name": "Mission Director", "role": "director", "password": "Polar@2026"},
+  {"username": "logistics", "name": "Logistics Officer", "role": "logistics", "password": "Polar@2026"},
+  {"username": "stationlead", "name": "Station Leader", "role": "station_lead", "password": "Polar@2026"},
+  {"username": "viewer", "name": "Programme Observer", "role": "viewer", "password": "Polar@2026"}
+ ],
+ "missions": [
+  {"code": "ISEA-SUM", "name": "Summer Antarctic Expedition", "season": "2026-27", "status": "Active", "start_date_d": -20, "end_date_d": 150, "description": "Relief, resupply and science campaign for the Antarctic stations."},
+  {"code": "ARC-26", "name": "Arctic Summer Campaign", "season": "2026", "status": "Planning", "start_date_d": 40, "end_date_d": 120, "description": "Seasonal science and resupply at the Arctic station."}
+ ],
+ "stations": [
+  {"code": "MAITRI", "name": "Maitri", "region": "Antarctica", "type": "Permanent research station", "lat": -70.77, "lon": 11.73, "crew": 25, "crew_capacity": 40, "established": 1989, "status": "Operational"},
+  {"code": "BHARATI", "name": "Bharati", "region": "Antarctica", "type": "Permanent research station", "lat": -69.41, "lon": 76.19, "crew": 47, "crew_capacity": 72, "established": 2012, "status": "Operational"},
+  {"code": "HIMADRI", "name": "Himadri", "region": "Arctic", "type": "Permanent research station", "lat": 78.92, "lon": 11.93, "crew": 12, "crew_capacity": 24, "established": 2008, "status": "Operational"},
+  {"code": "CAPETOWN", "name": "Cape Town Transit Hub", "region": "Africa", "type": "Transit hub", "lat": -33.92, "lon": 18.42, "crew": 3, "crew_capacity": 10, "established": 2000, "status": "Operational"},
+  {"code": "MORMUGAO", "name": "Mormugao Staging Depot", "region": "India", "type": "Port and staging depot", "lat": 15.41, "lon": 73.8, "crew": 6, "crew_capacity": 20, "established": 1981, "status": "Operational"}
+ ],
+ "transports": [
+  {"mission": "ISEA-SUM", "name": "MV Polar Star (sample)", "mode": "Vessel", "origin": "Cape Town", "station": "MAITRI", "depart_d": 10, "arrive_d": 34, "cutoff_d": 4, "status": "Scheduled", "cargo_capacity_t": 150, "seats": 45},
+  {"mission": "ISEA-SUM", "name": "Flight AN-21 (sample)", "mode": "Aircraft", "origin": "Cape Town", "station": "BHARATI", "depart_d": 3, "arrive_d": 4, "cutoff_d": 1, "status": "Delayed", "cargo_capacity_t": 12, "seats": 40},
+  {"mission": "ISEA-SUM", "name": "MV Polar Star Leg 2 (sample)", "mode": "Vessel", "origin": "Cape Town", "station": "BHARATI", "depart_d": 30, "arrive_d": 52, "cutoff_d": 22, "status": "Scheduled", "cargo_capacity_t": 120, "seats": 40},
+  {"mission": "ISEA-SUM", "name": "Feeder Flight GOA-CPT (sample)", "mode": "Aircraft", "origin": "Mormugao", "station": "CAPETOWN", "depart_d": 6, "arrive_d": 7, "cutoff_d": 2, "status": "Scheduled", "cargo_capacity_t": 20, "seats": 30},
+  {"mission": "ARC-26", "name": "MV Northern Light (sample)", "mode": "Vessel", "origin": "Tromso", "station": "HIMADRI", "depart_d": 45, "arrive_d": 52, "cutoff_d": 35, "status": "Scheduled", "cargo_capacity_t": 60, "seats": 20}
+ ],
+ "personnel": [
+  {"name": "Dr. Anita Menon", "role": "Glaciologist", "organisation": "NCPOR", "mission": "ISEA-SUM", "station": "MAITRI", "movement_status": "At station", "medical_cleared": 1, "training_cleared": 1, "permit_cleared": 1, "contact": "+91-832-0000101"},
+  {"name": "Ravi Shankar", "role": "Station engineer", "organisation": "NCPOR", "mission": "ISEA-SUM", "station": "MAITRI", "movement_status": "At station", "medical_cleared": 1, "training_cleared": 1, "permit_cleared": 1, "contact": "+91-832-0000102"},
+  {"name": "Dr. Kavita Rao", "role": "Medical officer", "organisation": "NCPOR", "mission": "ISEA-SUM", "station": "MAITRI", "movement_status": "At station", "medical_cleared": 1, "training_cleared": 1, "permit_cleared": 1, "contact": "+91-832-0000103"},
+  {"name": "Imran Sheikh", "role": "Mechanic", "organisation": "Contractor", "mission": "ISEA-SUM", "station": "BHARATI", "movement_status": "At station", "medical_cleared": 1, "training_cleared": 1, "permit_cleared": 1, "contact": "+91-832-0000104"},
+  {"name": "Dr. Lakshmi Iyer", "role": "Marine biologist", "organisation": "Research institute", "mission": "ISEA-SUM", "station": "BHARATI", "movement_status": "At station", "medical_cleared": 1, "training_cleared": 1, "permit_cleared": 1, "contact": "+91-832-0000105"},
+  {"name": "Arjun Nair", "role": "Communications lead", "organisation": "NCPOR", "mission": "ISEA-SUM", "station": "BHARATI", "movement_status": "Returning", "medical_cleared": 1, "training_cleared": 1, "permit_cleared": 1, "contact": "+91-832-0000106"},
+  {"name": "Sunita Deshmukh", "role": "Atmospheric scientist", "organisation": "University", "mission": "ISEA-SUM", "station": "MAITRI", "transport": "MV Polar Star (sample)", "movement_status": "Deployed", "medical_cleared": 1, "training_cleared": 1, "permit_cleared": 0, "contact": "+91-832-0000107"},
+  {"name": "Vikram Patil", "role": "Field guide", "organisation": "Contractor", "mission": "ISEA-SUM", "station": "MAITRI", "transport": "MV Polar Star (sample)", "movement_status": "Deployed", "medical_cleared": 1, "training_cleared": 0, "permit_cleared": 1, "contact": "+91-832-0000108"},
+  {"name": "Dr. Farah Khan", "role": "Geologist", "organisation": "University", "mission": "ISEA-SUM", "station": "BHARATI", "transport": "Flight AN-21 (sample)", "movement_status": "In transit", "medical_cleared": 1, "training_cleared": 1, "permit_cleared": 1, "contact": "+91-832-0000109"},
+  {"name": "Rohan Kulkarni", "role": "Logistics coordinator", "organisation": "NCPOR", "mission": "ISEA-SUM", "station": "CAPETOWN", "movement_status": "At station", "medical_cleared": 1, "training_cleared": 1, "permit_cleared": 1, "contact": "+91-832-0000110"},
+  {"name": "Meera Pillai", "role": "Cook", "organisation": "Contractor", "mission": "ISEA-SUM", "station": "BHARATI", "transport": "MV Polar Star Leg 2 (sample)", "movement_status": "Deployed", "medical_cleared": 0, "training_cleared": 1, "permit_cleared": 1, "contact": "+91-832-0000111"},
+  {"name": "Dr. Sanjay Bhat", "role": "Oceanographer", "organisation": "NCPOR", "mission": "ISEA-SUM", "station": "MAITRI", "movement_status": "Transferred", "medical_cleared": 1, "training_cleared": 1, "permit_cleared": 1, "contact": "+91-832-0000112"},
+  {"name": "Nisha Verma", "role": "Station leader", "organisation": "NCPOR", "mission": "ARC-26", "station": "HIMADRI", "movement_status": "At station", "medical_cleared": 1, "training_cleared": 1, "permit_cleared": 1, "contact": "+91-832-0000113"},
+  {"name": "Tarun Joshi", "role": "Instrument technician", "organisation": "NCPOR", "mission": "ARC-26", "station": "HIMADRI", "transport": "MV Northern Light (sample)", "movement_status": "Deployed", "medical_cleared": 0, "training_cleared": 0, "permit_cleared": 0, "contact": "+91-832-0000114"}
+ ],
+ "assets": [
+  {"station": "MAITRI", "tag": "TRK-01", "name": "Tracked carrier", "category": "Vehicle", "model": "T-300", "serial": "SN-88121", "status": "Ready", "condition": "Good", "service_hours": 210, "total_hours": 6400, "commissioned": 2016},
+  {"station": "MAITRI", "tag": "SNW-04", "name": "Snow tractor", "category": "Vehicle", "model": "ST-50", "serial": "SN-77410", "status": "In use", "condition": "Fair", "service_hours": 18, "total_hours": 9100, "commissioned": 2011},
+  {"station": "MAITRI", "tag": "GEN-02", "name": "Diesel generator 250 kVA", "category": "Power", "model": "G-250", "serial": "SN-55102", "status": "Ready", "condition": "Good", "service_hours": 64, "total_hours": 12000, "commissioned": 2014},
+  {"station": "BHARATI", "tag": "TRK-07", "name": "Tracked carrier", "category": "Vehicle", "model": "T-300", "serial": "SN-90233", "status": "Maintenance", "condition": "Poor", "service_hours": 0, "total_hours": 15200, "commissioned": 2012},
+  {"station": "BHARATI", "tag": "GEN-05", "name": "Diesel generator 400 kVA", "category": "Power", "model": "G-400", "serial": "SN-61227", "status": "In use", "condition": "Good", "service_hours": 22, "total_hours": 8800, "commissioned": 2017},
+  {"station": "BHARATI", "tag": "HEL-01", "name": "Helicopter landing kit", "category": "Aviation", "model": "HL-2", "serial": "SN-30411", "status": "Ready", "condition": "Good", "service_hours": 300, "total_hours": 900, "commissioned": 2021},
+  {"station": "HIMADRI", "tag": "SNM-02", "name": "Snowmobile", "category": "Vehicle", "model": "SM-9", "serial": "SN-12045", "status": "Ready", "condition": "Good", "service_hours": 75, "total_hours": 1500, "commissioned": 2020},
+  {"station": "HIMADRI", "tag": "COM-03", "name": "Satellite terminal", "category": "Communication", "model": "SAT-4", "serial": "SN-22981", "status": "Ready", "condition": "Good", "service_hours": 400, "total_hours": 3000, "commissioned": 2022},
+  {"station": "MORMUGAO", "tag": "CRN-01", "name": "Container crane", "category": "Marine", "model": "CR-20", "serial": "SN-10788", "status": "Ready", "condition": "Fair", "service_hours": 45, "total_hours": 11000, "commissioned": 2010}
+ ],
+ "item_templates": [
+  {"name": "Diesel, arctic grade", "category": "Fuel", "unit": "drum", "stock": 300, "daily_rate": 0.9, "per_person": 0, "kg_per_unit": 190, "unit_cost": 21000, "supplier": "Meridian Petro Supply", "criticality": "High", "location": "Fuel yard A"},
+  {"name": "LPG cylinders", "category": "Fuel", "unit": "cylinder", "stock": 200, "daily_rate": 0.7, "per_person": 0, "kg_per_unit": 30, "unit_cost": 3800, "supplier": "Meridian Petro Supply", "criticality": "High", "location": "Gas store"},
+  {"name": "Dry food rations", "category": "Food", "unit": "person-day", "stock": 3900, "daily_rate": 1, "per_person": 1, "kg_per_unit": 1.6, "unit_cost": 420, "supplier": "Nordic Provisions Ltd", "criticality": "High", "location": "Dry store 1", "shelf_days": 540},
+  {"name": "Frozen provisions", "category": "Food", "unit": "person-day", "stock": 1500, "daily_rate": 0.4, "per_person": 1, "kg_per_unit": 1.1, "unit_cost": 260, "supplier": "Nordic Provisions Ltd", "criticality": "High", "location": "Cold store 1", "shelf_days": 200},
+  {"name": "Water treatment cartridges", "category": "Utilities", "unit": "cartridge", "stock": 140, "daily_rate": 0.3, "per_person": 0, "kg_per_unit": 2, "unit_cost": 1400, "supplier": "AquaPure Systems", "criticality": "High", "location": "Plant room", "shelf_days": 400},
+  {"name": "First-aid kits", "category": "Medical", "unit": "kit", "stock": 34, "daily_rate": 0.05, "per_person": 0, "kg_per_unit": 6, "unit_cost": 4800, "supplier": "Cryo Med Supplies", "criticality": "High", "location": "Medical bay", "shelf_days": 700},
+  {"name": "Antibiotics and essentials", "category": "Medical", "unit": "pack", "stock": 220, "daily_rate": 0.6, "per_person": 0, "kg_per_unit": 0.4, "unit_cost": 900, "supplier": "Cryo Med Supplies", "criticality": "High", "location": "Medical bay", "shelf_days": 300},
+  {"name": "Vehicle spares", "category": "Spares", "unit": "set", "stock": 18, "daily_rate": 0.04, "per_person": 0, "kg_per_unit": 40, "unit_cost": 32000, "supplier": "Frontier Machine Parts", "criticality": "Medium", "location": "Workshop"},
+  {"name": "Satellite terminal batteries", "category": "Communication", "unit": "unit", "stock": 40, "daily_rate": 0.05, "per_person": 0, "kg_per_unit": 4, "unit_cost": 7200, "supplier": "Orbit Link Systems", "criticality": "High", "location": "Comms room", "shelf_days": 900},
+  {"name": "Ice-core sampling kits", "category": "Scientific", "unit": "kit", "stock": 30, "daily_rate": 0.08, "per_person": 0, "kg_per_unit": 12, "unit_cost": 15000, "supplier": "Glacier Labs", "criticality": "Low", "location": "Lab store"}
+ ],
+ "cargo": [
+  {"transport": "MV Polar Star (sample)", "description": "Arctic-grade diesel, 120 drums", "category": "Fuel", "hazard": 1, "weight_kg": 22800, "volume_m3": 30, "origin": "Cape Town", "station": "MAITRI", "priority": "Critical", "docs_complete": 1, "owner": "Logistics", "status": "Packed"},
+  {"transport": "MV Polar Star (sample)", "description": "Dry and frozen food rations", "category": "Food and provisions", "hazard": 0, "weight_kg": 18500, "volume_m3": 44, "origin": "Cape Town", "station": "MAITRI", "priority": "Critical", "docs_complete": 1, "owner": "Provisioning", "status": "Registered"},
+  {"transport": "MV Polar Star (sample)", "description": "Generator overhaul kit", "category": "Spares", "hazard": 0, "weight_kg": 2600, "volume_m3": 6, "origin": "Cape Town", "station": "MAITRI", "priority": "High", "docs_complete": 0, "owner": "Engineering", "status": "Registered"},
+  {"transport": "MV Polar Star (sample)", "description": "Glaciology instruments", "category": "Scientific equipment", "hazard": 0, "weight_kg": 1400, "volume_m3": 5, "origin": "Cape Town", "station": "MAITRI", "priority": "Normal", "docs_complete": 1, "owner": "Science team", "status": "Packed"},
+  {"transport": "Flight AN-21 (sample)", "description": "Medical supplies and vaccines", "category": "Medical", "hazard": 0, "weight_kg": 3200, "volume_m3": 8, "origin": "Cape Town", "station": "BHARATI", "priority": "Critical", "docs_complete": 1, "owner": "Medical", "status": "Packed"},
+  {"transport": "Flight AN-21 (sample)", "description": "Replacement tracked-carrier parts", "category": "Spares", "hazard": 0, "weight_kg": 6800, "volume_m3": 14, "origin": "Cape Town", "station": "BHARATI", "priority": "Critical", "docs_complete": 0, "owner": "Engineering", "status": "Registered"},
+  {"transport": "Flight AN-21 (sample)", "description": "Satellite terminal batteries", "category": "Communication", "hazard": 1, "weight_kg": 4100, "volume_m3": 7, "origin": "Cape Town", "station": "BHARATI", "priority": "High", "docs_complete": 1, "owner": "Communications", "status": "Registered"},
+  {"transport": "MV Polar Star Leg 2 (sample)", "description": "Winter clothing and shelter kits", "category": "Shelter and clothing", "hazard": 0, "weight_kg": 9200, "volume_m3": 40, "origin": "Cape Town", "station": "BHARATI", "priority": "Normal", "docs_complete": 1, "owner": "Logistics", "status": "Registered"},
+  {"transport": "MV Polar Star Leg 2 (sample)", "description": "Marine sampling equipment", "category": "Scientific equipment", "hazard": 0, "weight_kg": 5400, "volume_m3": 18, "origin": "Cape Town", "station": "BHARATI", "priority": "High", "docs_complete": 0, "owner": "Science team", "status": "Registered"},
+  {"transport": "Feeder Flight GOA-CPT (sample)", "description": "Dry provisions for onward shipment", "category": "Food and provisions", "hazard": 0, "weight_kg": 7600, "volume_m3": 20, "origin": "Mormugao", "station": "CAPETOWN", "priority": "High", "docs_complete": 1, "owner": "Provisioning", "status": "In Transit"},
+  {"transport": "Feeder Flight GOA-CPT (sample)", "description": "Laboratory reagents", "category": "Hazardous materials", "hazard": 1, "weight_kg": 900, "volume_m3": 2, "origin": "Mormugao", "station": "CAPETOWN", "priority": "Normal", "docs_complete": 0, "owner": "Science team", "status": "Registered"},
+  {"transport": "MV Northern Light (sample)", "description": "Arctic station spares", "category": "Spares", "hazard": 0, "weight_kg": 3100, "volume_m3": 9, "origin": "Tromso", "station": "HIMADRI", "priority": "Normal", "docs_complete": 1, "owner": "Engineering", "status": "Registered"},
+  {"mission": "ISEA-SUM", "description": "Ice-core drilling consumables", "category": "Scientific equipment", "hazard": 0, "weight_kg": 2100, "volume_m3": 6, "origin": "Mormugao", "station": "MAITRI", "priority": "Normal", "docs_complete": 1, "owner": "Science team", "status": "Registered"},
+  {"transport": "Feeder Flight GOA-CPT (sample)", "description": "Completed prior-season return samples", "category": "Scientific equipment", "hazard": 0, "weight_kg": 800, "volume_m3": 2, "origin": "Maitri", "station": "MORMUGAO", "priority": "High", "docs_complete": 1, "owner": "Science team", "status": "Delivered"}
+ ],
+ "incidents": [
+  {"mission": "ISEA-SUM", "station": "BHARATI", "title": "Tracked carrier hydraulic failure", "type": "Equipment failure", "severity": "Moderate", "status": "Responding", "description": "TRK-07 lost hydraulic pressure during a supply run. Vehicle recovered to the workshop.", "reporter": "Imran Sheikh", "hours_ago": 30,
+   "people": ["Imran Sheikh", "Dr. Lakshmi Iyer"],
+   "actions": [{"action": "Recover vehicle to workshop", "assignee": "Imran Sheikh", "status": "Done"}, {"action": "Diagnose hydraulic pump and order spares", "assignee": "Ravi Shankar", "status": "In progress"}, {"action": "Reschedule field survey using SNW-09 or airlift", "assignee": "Station leader", "status": "Pending"}]},
+  {"mission": "ISEA-SUM", "station": "MAITRI", "title": "Whiteout during outdoor survey", "type": "Weather", "severity": "High", "status": "Open", "description": "Survey party of two delayed by sudden whiteout, last contact 40 minutes ago.", "reporter": "Dr. Kavita Rao", "hours_ago": 2,
+   "people": ["Dr. Anita Menon", "Ravi Shankar"],
+   "actions": [{"action": "Establish radio contact and confirm position", "assignee": "Dr. Kavita Rao", "status": "In progress"}, {"action": "Prepare rescue team and tracked carrier", "assignee": "Station leader", "status": "Pending"}]}
+ ]
+}
