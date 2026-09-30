@@ -1,10 +1,10 @@
-#Framework-neutral request handling, shared by the local server and the Vercel function.
+# Framework-neutral request handling, shared by the local server and the Vercel function.
 import io
 import json
 import re
 import traceback
 from contextlib import closing
-from urllib.parse import parse_qs
+from urllib.parse import parse_qsl
 
 import psycopg
 
@@ -21,18 +21,27 @@ def qr_svg(code):
     segno.make(code, error="m").save(buf, kind="svg", scale=5, border=2, dark="#14293f")
     return buf.getvalue()
 
+def restore_route(path, query_string):
+    """The browser calls the single function URL /api/index and names the real route in `__vpath`.
+    This avoids depending on how a hosting platform rewrites paths. Direct calls such as /api/login still work."""
+    pairs = parse_qsl(query_string, keep_blank_values=True)
+    routed = next((v for k, v in pairs if k == "__vpath"), None)
+    if routed:
+        path = routed if routed.startswith("/") else "/" + routed
+    return path, {k: v for k, v in pairs if k != "__vpath"}
+
 def handle(method, path, query_string, authorization, raw_body):
-    #Process one API request and return (status, content_type, payload_bytes).
+    """Process one API request and return (status, content_type, payload_bytes)."""
     def reply(status, body, content_type="application/json"):
         return status, content_type, body if isinstance(body, bytes) else json.dumps(body).encode()
 
+    path, query = restore_route(path, query_string)
     qr = QR_PATTERN.match(path)
     if qr:
         svg = qr_svg(qr[1])
         return reply(200, svg, "image/svg+xml") if svg else reply(501, {"error": "Install segno to generate QR codes"})
     if not path.startswith("/api/"):
         return reply(404, {"error": "Not found"})
-    query = {k: v[0] for k, v in parse_qs(query_string).items()}
     token = (authorization or "").removeprefix("Bearer ").strip()
     try:
         body = json.loads(raw_body) if raw_body else {}

@@ -1,6 +1,5 @@
 "use strict";
-// Polar Mission Control web client
-
+//Polar Mission Control web client.
 const $ = (sel, root = document) => root.querySelector(sel);
 const esc = v => String(v ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const num = v => v === null || v === undefined || v === "" ? "-" : Number(v).toLocaleString("en-IN", { maximumFractionDigits: 1 });
@@ -18,7 +17,11 @@ let main;
 /* ---------- transport: API calls with an offline cache and write queue ---------- */
 const queue = () => JSON.parse(localStorage.getItem("pmc.queue") || "[]");
 const saveQueue = q => { localStorage.setItem("pmc.queue", JSON.stringify(q)); renderNet(); };
-const send = (path, method, body) => fetch("/api" + path, { method, headers: { "Content-Type": "application/json", ...(S.token ? { Authorization: "Bearer " + S.token } : {}) }, body: body === undefined ? undefined : JSON.stringify(body) });
+const send = (path, method, body) => {
+  // Every call goes to one function URL and names the real route in __vpath (see polar/web.py).
+  const [route, qs] = path.split("?");
+  return fetch("/api/index?__vpath=" + encodeURIComponent("/api" + route) + (qs ? "&" + qs : ""), { method, headers: { "Content-Type": "application/json", ...(S.token ? { Authorization: "Bearer " + S.token } : {}) }, body: body === undefined ? undefined : JSON.stringify(body) });
+};
 
 async function api(path, method = "GET", body) {
   try {
@@ -70,8 +73,8 @@ addEventListener("offline", () => setOnline(false));
 /* ---------- small UI helpers ---------- */
 function toast(msg, bad) { const t = $("#toast"); t.textContent = msg; t.className = "show" + (bad ? " bad" : ""); clearTimeout(toast.t); toast.t = setTimeout(() => t.className = "", 3000); }
 const table = (cols, rows, empty) => rows.length
-  ? `<div class="tw"><table><thead><tr>${cols.map(c => `<th${c[0] === ">" ? ' class="n"' : ""}>${esc(c.replace(/^>/, ""))}</th>`).join("")}</tr></thead><tbody>${rows.join("")}</tbody></table></div>`
-  : `<div class="tw"><p class="empty">${empty}</p></div>`;
+    ? `<div class="tw"><table><thead><tr>${cols.map(c => `<th${c[0] === ">" ? ' class="n"' : ""}>${esc(c.replace(/^>/, ""))}</th>`).join("")}</tr></thead><tbody>${rows.join("")}</tbody></table></div>`
+    : `<div class="tw"><p class="empty">${empty}</p></div>`;
 const head = (title, sub, actions = "") => { $("#head").innerHTML = `<h1>${title}<small>${sub}</small></h1><div>${actions}</div>`; };
 const uniq = (rows, key) => [...new Set(rows.map(r => r[key]).filter(Boolean))].sort();
 const missionQuery = () => S.mission ? `?mission_id=${S.mission}` : "";
@@ -89,7 +92,7 @@ function dialog(html) {
 /* Filterable, searchable list. `row` returns a <tr data-id> string; `onRow` receives the clicked record. */
 function listView(root, data, { filters = [], columns, row, empty, onRow }) {
   root.innerHTML = `<div class="tools"><input id="q" placeholder="Search" style="min-width:220px">${filters.map(([k, label, opts]) =>
-    `<select data-k="${k}"><option value="">${label}</option>${opts.map(o => `<option>${esc(o)}</option>`).join("")}</select>`).join("")}<span class="cnt"></span></div><div class="tbl"></div>`;
+      `<select data-k="${k}"><option value="">${label}</option>${opts.map(o => `<option>${esc(o)}</option>`).join("")}</select>`).join("")}<span class="cnt"></span></div><div class="tbl"></div>`;
   const draw = () => {
     const q = $("#q", root).value.toLowerCase();
     const active = [...root.querySelectorAll("select[data-k]")].filter(s => s.value);
@@ -159,7 +162,7 @@ async function boot() {
   const missions = await api("/missions");
   if (!missions.some(m => String(m.id) === String(S.mission))) S.mission = missions[0] ? String(missions[0].id) : null;
   $("#app").innerHTML = `<div class="shell"><aside><div class="brand">Polar Mission Control<small>Expedition operations</small></div><nav>${NAV.map(([group, items]) =>
-    `<span>${group}</span>${items.filter(i => !i[2] || can(i[2])).map(([id, label]) => `<a href="#${id}">${label}</a>`).join("")}`).join("")}</nav></aside>
+      `<span>${group}</span>${items.filter(i => !i[2] || can(i[2])).map(([id, label]) => `<a href="#${id}">${label}</a>`).join("")}`).join("")}</nav></aside>
     <div class="content"><div class="topbar"><label>Expedition <select id="mission">${missions.map(m => `<option value="${m.id}" ${String(m.id) === S.mission ? "selected" : ""}>${esc(m.name)}</option>`).join("")}</select></label>
     <span class="sp"></span><span class="who">${esc(S.meta.user.name)} (${esc(S.meta.user.role.replace("_", " "))})</span><button class="ghost sm" id="out">Sign out</button></div>
     <div class="netbar" id="net" hidden></div><main><div class="head" id="head"></div><div id="main"></div></main></div></div>`;
@@ -199,11 +202,11 @@ async function dashboard() {
   const openInc = d.alerts.filter(a => a.area === "Emergency").length;
   main.innerHTML = `<div class="grid g4">${[["Mission readiness", r.overall + "%"], ["Cargo in transit", inFlight], ["Cargo at red risk", red], ["Personnel", people], ["Open incidents", openInc]].map(k => `<div class="kpi"><span>${k[0]}</span><b>${k[1]}</b></div>`).join("")}</div>
   <div class="grid g2"><div class="panel"><h2>Mission readiness</h2><div class="overall ${tone(r.overall)}" style="background:none">${r.overall}%</div>${r.dimensions.map(x =>
-    `<div class="dim" title="${esc(x.detail)}"><span>${x.name}</span><div class="t"><div class="f ${TONE[x.level]}" style="width:${x.score}%"></div></div><span class="v">${x.score}</span></div>`).join("")}</div>
+      `<div class="dim" title="${esc(x.detail)}"><span>${x.name}</span><div class="t"><div class="f ${TONE[x.level]}" style="width:${x.score}%"></div></div><span class="v">${x.score}</span></div>`).join("")}</div>
   <div class="panel"><h2>Station map</h2><div class="maps">${polarMap(d.stations, true)}${polarMap(d.stations, false)}</div><p class="sub">Marker colour shows open incidents and red cargo. Stations outside polar latitudes are listed in the Expeditions page.</p></div></div>
   <div class="panel" style="margin-bottom:14px"><h2>Cargo pipeline</h2><div class="flow">${Object.entries(d.cargo_by_status).map(([k, v]) => `<div><b>${v}</b><span>${k}</span></div>`).join("")}</div></div>
   <div class="grid g2"><div><h2>Deadline intelligence</h2>${table(["Transport", "Cut-off", ">Days", "Not packed", "Status"], d.deadlines.map(x =>
-    `<tr><td>${esc(x.name)}</td><td>${fmtDate(x.cutoff)}</td><td class="n">${badge(x.days, x.days <= S.meta.thresholds.cutoff_red_days ? "critical" : x.days <= S.meta.thresholds.cutoff_amber_days ? "low" : "ok")}</td><td class="n">${x.unpacked}</td><td>${badge(x.status)}</td></tr>`), "No upcoming cut-offs.")}</div>
+      `<tr><td>${esc(x.name)}</td><td>${fmtDate(x.cutoff)}</td><td class="n">${badge(x.days, x.days <= S.meta.thresholds.cutoff_red_days ? "critical" : x.days <= S.meta.thresholds.cutoff_amber_days ? "low" : "ok")}</td><td class="n">${x.unpacked}</td><td>${badge(x.status)}</td></tr>`), "No upcoming cut-offs.")}</div>
   <div class="panel"><h2>Alerts (${d.alerts.length})</h2>${d.alerts.slice(0, 12).map(a => `<div class="alert" data-route="${a.route}"><span class="a">${badge(a.area, a.level === "critical" ? "critical" : "low")}</span><span>${esc(a.text)}</span></div>`).join("") || '<p class="empty">No alerts.</p>'}</div></div>`;
   main.querySelectorAll("[data-route]").forEach(el => el.onclick = () => location.hash = el.dataset.route);
 }
@@ -216,7 +219,7 @@ function timeline(transports) {
   const lo = Math.min(...dated.map(t => days(t.cutoff || t.depart))) - 2, hi = Math.max(...dated.map(t => days(t.arrive))) + 2, today = Date.now() / 864e5;
   const pct = v => (days(v) - lo) / (hi - lo) * 100;
   return `<div class="tlw">${today > lo && today < hi ? `<div class="today" style="left:${(today - lo) / (hi - lo) * 100}%" title="Today"></div>` : ""}${dated.map(t =>
-    `<div class="tl"><span class="nm" style="left:${pct(t.depart)}%">${esc(t.name)} ${badge(t.status)}</span><div class="lane" style="left:${pct(t.depart)}%;width:${pct(t.arrive) - pct(t.depart)}%" title="${fmtDate(t.depart)} to ${fmtDate(t.arrive)}"></div>${t.cutoff ? `<div class="cut" style="left:${pct(t.cutoff)}%" title="Cargo cut-off ${fmtDate(t.cutoff)}"></div>` : ""}</div>`).join("")}</div>
+      `<div class="tl"><span class="nm" style="left:${pct(t.depart)}%">${esc(t.name)} ${badge(t.status)}</span><div class="lane" style="left:${pct(t.depart)}%;width:${pct(t.arrive) - pct(t.depart)}%" title="${fmtDate(t.depart)} to ${fmtDate(t.arrive)}"></div>${t.cutoff ? `<div class="cut" style="left:${pct(t.cutoff)}%" title="Cargo cut-off ${fmtDate(t.cutoff)}"></div>` : ""}</div>`).join("")}</div>
     <p class="sub">Bars show departure to arrival, diamonds mark the cargo cut-off, the red line is today.</p>`;
 }
 
@@ -239,9 +242,9 @@ async function missions() {
 async function cargoDetail(row) {
   const trail = await api(`/cargo/${row.id}/custody`);
   const d = dialog(`<h2>${esc(row.code)} ${badge(row.risk, TONE[row.risk])} ${badge(row.status)}</h2><p>${esc(row.description)}</p>
-    <div style="display:flex;gap:20px;flex-wrap:wrap"><div><img class="qr" src="/api/qr/${esc(row.code)}.svg" alt="QR code for ${esc(row.code)}" onerror="this.outerHTML='<div class=&quot;qrfallback&quot;>QR unavailable. Install segno to enable labels.</div>'"></div>
+    <div style="display:flex;gap:20px;flex-wrap:wrap"><div><img class="qr" src="/api/index?__vpath=/api/qr/${esc(row.code)}.svg" alt="QR code for ${esc(row.code)}" onerror="this.outerHTML='<div class=&quot;qrfallback&quot;>QR unavailable. Install segno to enable labels.</div>'"></div>
     <div style="flex:1;min-width:240px"><table><tbody>${[["Category", row.category], ["Destination", row.station], ["Transport", row.transport], ["Cut-off", `${fmtDate(row.cutoff)} (${row.days_to_cutoff ?? "-"} days)`], ["Weight", `${num(row.weight_kg)} kg / ${num(row.volume_m3)} m3`],
-      ["Priority", row.priority], ["Owner", row.owner], ["Paperwork", row.docs_complete ? "Complete" : "Incomplete"]].map(([k, v]) => `<tr><td>${k}</td><td>${esc(v ?? "-")}</td></tr>`).join("")}</tbody></table></div></div>
+    ["Priority", row.priority], ["Owner", row.owner], ["Paperwork", row.docs_complete ? "Complete" : "Incomplete"]].map(([k, v]) => `<tr><td>${k}</td><td>${esc(v ?? "-")}</td></tr>`).join("")}</tbody></table></div></div>
     <h3>Risk assessment</h3>${row.risk_reasons.length ? `<ul>${row.risk_reasons.map(r => `<li>${esc(r)}</li>`).join("")}</ul>` : "<p>No issues detected.</p>"}
     <h3>Chain of custody</h3><ul class="steps">${trail.map(e => `<li><b>${esc(e.status)}</b> at ${esc(e.location || "-")}<span class="sub">${fmtTime(e.ts)} / ${esc(e.handler)}${e.note ? " / " + esc(e.note) : ""}</span></li>`).join("")}</ul>
     <div class="fa"><span class="sp"></span>${can("logistics") ? '<button class="ghost" id="edit">Edit</button>' : ""}${can("logistics") && row.next_status ? `<button id="adv">Mark as ${esc(row.next_status)}</button>` : ""}<button class="ghost" data-close>Close</button></div>`);
