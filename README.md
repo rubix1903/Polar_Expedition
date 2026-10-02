@@ -25,7 +25,7 @@ All demo passwords are `Polar@2026`.
 6. **Asset and inventory registry**: condition, maintenance hours, stock cover, expiry and value.
 7. **Emergency response centre**: incidents, affected personnel, assigned response actions, closure rules.
 8. **Expedition copilot**: plain-language operational questions answered from live data.
-9. **Role-based access and audit timeline**: four roles, every change logged.
+9. **Role-based access and audit timeline**: four roles. every change logged.
 10. **Differentiators**: offline-first mode with a sync queue, what-if contingency planner, mission readiness view, chain of custody.
 
 ## Project layout
